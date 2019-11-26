@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="testbox">
+      <form action="">
+        <div class="banner">
+          <h1>Oracle XML DB</h1>
+          <h3>
+            Oracle XML DB is a high-performance, native XML storage and
+            retrieval technology that is delivered as a part of all versions of
+            Oracle Database.
+          </h3>
+        </div>
+        <p>Applicant Information</p>
+        <div class="item">
+          <label for="name">Name<span>*</span></label>
+          <input id="name" type="text" name="name" required />
+        </div>
+        <div class="item">
+          <label for="email">Email Address<span>*</span></label>
+          <input id="email" type="email" name="email" required />
+        </div>
+        <div class="item">
+          <label for="phone">Phone<span>*</span></label>
+          <input id="phone" type="number" name="phone" required />
+        </div>
+        <div class="item">
+          <label for="bdate">Date of Birth<span>*</span></label>
+          <input id="bdate" type="date" name="bdate" required />
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="question">
+          <label>Gender</label>
+          <div class="question-answer">
+            <div>
+              <input type="radio" value="male" id="radio_1" name="gender" />
+              <label for="radio_1" class="radio"><span>Male</span></label>
+            </div>
+            <div>
+              <input type="radio" value="female" id="radio_2" name="gender" />
+              <label for="radio_2" class="radio"><span>Female</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="btn-block">
+          <button type="submit">SUBMIT</button>
+        </div>
+      </form>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script>
+        $("button").click(function() {
+          var name = $('input[name="name"]').val();
+          var email = $('input[name="email"]').val();
+          var phone = $('input[name="phone"]').val();
+          var date = $('input[name="bdate"]').val();
+          var gender = $('input[name="gender"]').val();
+          var str =
+            '<?xml version="1.0" encoding="UTF-8"?><registration><name>' +
+            name +
+            "</name><email>" +
+            email +
+            "</email><phone>" +
+            phone +
+            "</phone><date>" +
+            date +
+            "</date><gender>" +
+            gender +
+            "</gender></registration>";
+          alert(str);
+          $.ajax({
+            url: "/dumpIntoDB", //this is the url to the database
+            processData: false,
+            contentType: "text/plain",
+            type: "POST", // type should be POST2
+            data: str, // send the string directly
+            success: function(response) {
+              alert("Data Saved");
+            },
+            error: function(response) {
+              alert("Error");
+            }
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>
